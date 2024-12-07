@@ -4,6 +4,7 @@ import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:youfit/screens/home_screen.dart';
+import 'package:youfit/screens/splashscreen.dart';
 import 'package:youfit/utils/utils.dart';
 import '../models/user.dart';
 import '../providers/user_provider.dart';
@@ -13,14 +14,20 @@ class services {
   void signUpUser({required BuildContext context,
     required String email,
     required String password,
-    required String name}) async {
+    required String name,
+    required int height,
+    required int weight
+  }) async {
     try {
       User user =
       User(id: '',
           name: name,
           email: email,
           token: '',
-          password: password);
+          password: password,
+          height: height,
+          weight: weight
+      );
 
       http.Response res = await http.post(
         Uri.parse('${Constants.uri}/api/signup'),
@@ -39,6 +46,7 @@ class services {
     } catch (e) {
       showSnackBar(context, e.toString());
     }
+
   }
 
   void signInUser({
@@ -64,8 +72,7 @@ class services {
             await prefs.setString(
                 'x-auth-token', jsonDecode(res.body)['token']);
             navigator.pushAndRemoveUntil(
-              MaterialPageRoute(builder: (context) => const HomeScreen(),
-
+              MaterialPageRoute(builder: (context) => const SplashScreen(),
               ),
                   (route) => false,
             );
@@ -111,8 +118,10 @@ class services {
     }
   }
 
+
   void signout() async{
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setString("x-auth-token", "");
+    prefs.setBool("login/splash", false);
   }
 }

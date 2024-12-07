@@ -12,12 +12,23 @@ class Drawerpage2 extends StatefulWidget {
 
 class _drawerpage2State extends State<Drawerpage2> {
   final authservices = services();
+  var snackBar = const SnackBar(
+    content: Text("Congrats"),
+  );
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Youfit"),
-        backgroundColor: Colors.blueGrey,
+        backgroundColor: Colors.lightBlue,
+      ),
+      body: ListTile(
+        leading: const Icon(Icons.info),
+        title: GestureDetector(
+            onDoubleTap: () {
+              ScaffoldMessenger.of(context).showSnackBar(snackBar);
+            }, child: const Text("Version 1.0.0")),
       ),
     );
   }

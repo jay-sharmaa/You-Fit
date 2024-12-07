@@ -6,6 +6,8 @@ class User {
   final String email;
   final String token;
   final String password;
+  final int height;
+  final int weight;
 
   User(
       {required this.id,
@@ -13,28 +15,32 @@ class User {
       required this.email,
       required this.token,
       required this.password,
-      });
+      required this.height,
+      required this.weight,});
 
-  Map<String, dynamic> toMap(){
+  Map<String, dynamic> toMap() {
     return {
       'name': name,
       'email': email,
       'token': token,
-      'password': password
+      'password': password,
+      'height': height,
+      'weight': weight,
     };
   }
 
-  factory User.fromMap(Map<String, dynamic> map){
+  factory User.fromMap(Map<String, dynamic> map) {
     return User(
-      id: map['_id']?? '',
-      name: map['name']?? '',
-      email: map['email']?? '',
-      token: map['token']?? '',
-      password: map['password']?? '',
+        id: map['_id'] ?? '',
+        name: map['name'] ?? '',
+        email: map['email'] ?? '',
+        token: map['token'] ?? '',
+        password: map['password'] ?? '',
+        height: map['height'] ?? 0,
+        weight: map['weight'] ?? 0,
     );
   }
 
   String toJson() => json.encode(toMap());
-
   factory User.fromJson(String source) => User.fromMap(json.decode(source));
 }

@@ -7,7 +7,11 @@ class userProvider with ChangeNotifier {
       email: '',
       token: '',
       password: '',
+      height: 0,
+      weight: 0,
   );
+
+
 
   User get user => _user;
 
